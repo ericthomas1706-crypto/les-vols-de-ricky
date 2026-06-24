@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Touskii — Ajouter mes photos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#0d0d10;color:#f0e5d0;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  padding:3rem 1.5rem;
+}
+h1{
+  font-size:2rem;font-weight:900;letter-spacing:.05em;
+  background:linear-gradient(90deg,#c9935a,#d4a535);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.5rem;text-transform:uppercase;
+}
+.subtitle{color:rgba(240,229,208,.5);font-size:.95rem;margin-bottom:3rem;text-align:center}
+
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.25rem;width:100%;max-width:900px;margin-bottom:2.5rem;
+}
+.card{
+  background:#111118;border:2px dashed rgba(201,147,90,.3);
+  border-radius:14px;padding:1.5rem;text-align:center;
+  transition:border-color .2s;cursor:pointer;
+}
+.card:hover{border-color:#c9935a}
+.card.done{border-style:solid;border-color:#2d6e42}
+.card-preview{
+  width:100%;aspect-ratio:4/3;object-fit:cover;
+  border-radius:8px;margin-bottom:.75rem;display:none;
+}
+.card-preview.visible{display:block}
+.card-placeholder{
+  width:100%;aspect-ratio:4/3;background:#1a1a22;
+  border-radius:8px;margin-bottom:.75rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;color:rgba(240,229,208,.2);
+}
+.card-placeholder.hidden{display:none}
+.card-label{font-weight:700;font-size:.9rem;color:#c9935a;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.card-desc{font-size:.78rem;color:rgba(240,229,208,.4);margin-bottom:1rem;line-height:1.4}
+input[type=file]{display:none}
+.pick-btn{
+  background:rgba(201,147,90,.15);border:1px solid rgba(201,147,90,.3);
+  color:#c9935a;padding:.6rem 1.2rem;border-radius:6px;
+  font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:background .2s;
+}
+.pick-btn:hover{background:rgba(201,147,90,.25)}
+.pick-btn.done-btn{background:rgba(45,110,66,.2);border-color:rgba(45,110,66,.4);color:#4a9a62}
+
+.generate-btn{
+  background:linear-gradient(90deg,#c9935a,#d4a535);
+  color:white;padding:1.1rem 3rem;
+  font-size:1.1rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;
+  border:none;border-radius:8px;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
+  margin-bottom:1rem;
+}
+.generate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,147,90,.4)}
+.generate-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+.status{
+  font-size:.9rem;color:rgba(240,229,208,.5);text-align:center;
+  margin-top:1rem;min-height:1.5rem;
+}
+.status.success{color:#4a9a62;font-weight:700}
+.status.error{color:#e05050}
+
+.info{
+  background:rgba(201,147,90,.07);border:1px solid rgba(201,147,90,.2);
+  border-radius:10px;padding:1.25rem 1.5rem;max-width:900px;width:100%;
+  font-size:.85rem;color:rgba(240,229,208,.6);line-height:1.7;margin-bottom:2rem;
+}
+.info strong{color:#d4a535}
+</style>
+</head>
+<body>
+
+<h1>Touskii</h1>
+<p class="subtitle">Ajoute tes vraies photos au site — aucune connaissance technique requise</p>
+
+<div class="info">
+  <strong>Comment ça marche :</strong> Sélectionne tes 5 photos dans les cases ci-dessous, puis clique sur "Générer mon site". Un nouveau fichier <strong>index.html</strong> sera téléchargé avec tes vraies photos intégrées dedans. Tu n'as qu'à remplacer l'ancien fichier par le nouveau.
+</div>
+
+<div class="cards">
+  <div class="card" id="card-hero" onclick="pickPhoto('hero')">
+    <img class="card-preview" id="prev-hero" alt="">
+    <div class="card-placeholder" id="ph-hero">⛰️</div>
+    <div class="card-label">Photo Hero (Fond principal)</div>
+    <div class="card-desc">Photo des montagnes du Camino — la plus grande, utilisée comme fond d'écran du site</div>
+    <label class="pick-btn" id="btn-hero">📷 Choisir la photo</label>
+    <input type="file" id="file-hero" accept="image/*" onchange="loadPhoto('hero', this)">
+  </div>
+
+  <div class="card" id="card-nature" onclick="pickPhoto('nature')">
+    <img class="card-preview" id="prev-nature" alt="">
+    <div class="card-placeholder" id="ph-nature">🏔️</div>
+    <div class="card-label">Photo Nature / Action</div>
+    <div class="card-desc">Toi accroupi sur les rochers — section "L'Expérience"</div>
+    <label class="pick-btn" id="btn-nature">📷 Choisir la photo</label>
+    <input type="file" id="file-nature" accept="image/*" onchange="loadPhoto('nature', this)">
+  </div>
+
+  <div class="card" id="card-maroc" onclick="pickPhoto('maroc')">
+    <img class="card-preview" id="prev-maroc" alt="">
+    <div class="card-placeholder" id="ph-maroc">🕌</div>
+    <div class="card-label">Photo Maroc</div>
+    <div class="card-desc">Toi marchant entre les colonnes au Maroc — section "Mon Histoire"</div>
+    <label class="pick-btn" id="btn-maroc">📷 Choisir la photo</label>
+    <input type="file" id="file-maroc" accept="image/*" onchange="loadPhoto('maroc', this)">
+  </div>
+
+  <div class="card" id="card-ocean" onclick="pickPhoto('ocean')">
+    <img class="card-preview" id="prev-ocean" alt="">
+    <div class="card-placeholder" id="ph-ocean">🌊</div>
+    <div class="card-label">Photo Océan</div>
+    <div class="card-desc">Toi assis au bord de l'Atlantique — section "Mon Histoire"</div>
+    <label class="pick-btn" id="btn-ocean">📷 Choisir la photo</label>
+    <input type="file" id="file-ocean" accept="image/*" onchange="loadPhoto('ocean', this)">
+  </div>
+
+  <div class="card" id="card-seville" onclick="pickPhoto('seville')">
+    <img class="card-preview" id="prev-seville" alt="">
+    <div class="card-placeholder" id="ph-seville">⛪</div>
+    <div class="card-label">Photo Séville / Camino</div>
+    <div class="card-desc">Toi devant la cathédrale avec ton sac à dos — section "Mon Histoire"</div>
+    <label class="pick-btn" id="btn-seville">📷 Choisir la photo</label>
+    <input type="file" id="file-seville" accept="image/*" onchange="loadPhoto('seville', this)">
+  </div>
+</div>
+
+<button class="generate-btn" id="genBtn" onclick="generateSite()">
+  🔥 Générer mon site avec mes photos
+</button>
+<div class="status" id="status">Sélectionne au moins une photo pour commencer</div>
+
+<script>
+const photos = {};
+let siteHTML = '';
+
+// Charge le fichier index.html du site
+fetch('index.html')
+  .then(r => r.text())
+  .then(html => { siteHTML = html; console.log('Site chargé ✓'); })
+  .catch(() => { document.getElementById('status').textContent = '⚠️ Place ce fichier dans le même dossier que index.html'; });
+
+function pickPhoto(key) {
+  document.getElementById('file-' + key).click();
+}
+
+function loadPhoto(key, input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const dataUrl = e.target.result;
+
+    // Compresse l'image
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 1400;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else        { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const compressed = canvas.toDataURL('image/jpeg', 0.82);
+
+      photos[key] = compressed;
+
+      // Preview
+      const prev = document.getElementById('prev-' + key);
+      const ph   = document.getElementById('ph-' + key);
+      const btn  = document.getElementById('btn-' + key);
+      const card = document.getElementById('card-' + key);
+      prev.src = compressed;
+      prev.classList.add('visible');
+      ph.classList.add('hidden');
+      btn.textContent = '✓ Photo choisie';
+      btn.classList.add('done-btn');
+      card.classList.add('done');
+
+      updateStatus();
+    };
+    img.src = dataUrl;
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateStatus() {
+  const n = Object.keys(photos).length;
+  const st = document.getElementById('status');
+  const btn = document.getElementById('genBtn');
+  if (n === 0) { st.textContent = 'Sélectionne au moins une photo pour commencer'; btn.disabled = true; }
+  else if (n < 5) { st.textContent = `${n}/5 photo${n>1?'s':''} sélectionnée${n>1?'s':''}  — tu peux générer maintenant ou continuer`; btn.disabled = false; }
+  else { st.textContent = '5/5 photos prêtes ! Clique sur Générer 🔥'; btn.disabled = false; }
+}
+
+function generateSite() {
+  if (!siteHTML) {
+    document.getElementById('status').textContent = '⚠️ Place ce fichier dans le même dossier que index.html';
+    document.getElementById('status').className = 'status error';
+    return;
+  }
+
+  document.getElementById('genBtn').disabled = true;
+  document.getElementById('status').textContent = 'Génération en cours…';
+  document.getElementById('status').className = 'status';
+
+  let html = siteHTML;
+
+  // Map keys to photo slots in the HTML
+  const map = {
+    'hero':    'camino-montagne',
+    'nature':  'rochers-nature',
+    'maroc':   'maroc-colonnes',
+    'ocean':   'ocean-atlantique',
+    'seville': 'camino-seville',
+  };
+
+  for (const [key, slug] of Object.entries(map)) {
+    if (!photos[key]) continue;
+    const dataUrl = photos[key];
+
+    // Replace all occurrences of this image (src attributes & CSS background)
+    // Pattern 1: src="photos/slug.jpg" or src="data:image/jpeg;base64,..."
+    html = html.replace(
+      /src="(photos\/camino-montagne\.jpg|data:image\/jpeg;base64,[^"]*)"([^>]*alt="[^"]*Camino[^"]*")/g,
+      key === 'hero' ? `src="${dataUrl}"$2` : `src="$1"$2`
+    );
+
+    // Replace any base64 block that was previously for this slot
+    // Use slot markers in alt text or nearby text
+    const altMap = {
+      'hero':    ['Camino – Montagnes', 'camino-montagne'],
+      'nature':  ['Eric en nature', 'En pleine nature', 'rochers-nature'],
+      'maroc':   ['Maroc', 'maroc-colonnes'],
+      'ocean':   ['Océan Atlantique', 'ocean-atlantique'],
+      'seville': ['Camino de Compostelle', 'camino-seville'],
+    };
+
+    // Simple approach: replace src that contains the slug
+    const slugPath = `photos/${slug}.jpg`;
+    // Replace data URI that was previously generated for this slot
+    // We'll do a targeted replacement using a regex that finds img tags with matching alt
+    const alts = altMap[key] || [];
+    for (const alt of alts) {
+      // Replace src in img tags with matching alt text
+      const re = new RegExp(`(src=")(data:image/jpeg;base64,[^"]*|photos/[^"]*\\.jpg)("(?:[^>]*?)alt="${alt.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}")`, 'g');
+      html = html.replace(re, `$1${dataUrl}$3`);
+    }
+  }
+
+  // Hero background CSS
+  if (photos['hero']) {
+    html = html.replace(
+      /background:url\('data:image\/jpeg;base64,[^']*'\) center center \/ cover no-repeat/,
+      `background:url('${photos['hero']}') center center / cover no-repeat`
+    );
+    html = html.replace(
+      /background:url\('photos\/camino-montagne\.jpg'\) center center \/ cover no-repeat/,
+      `background:url('${photos['hero']}') center center / cover no-repeat`
+    );
+  }
+
+  // Trigger download
+  const blob = new Blob([html], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  document.getElementById('status').textContent = '✅ Fichier téléchargé ! Remplace ton index.html par ce nouveau fichier.';
+  document.getElementById('status').className = 'status success';
+  document.getElementById('genBtn').disabled = false;
+}
+
+updateStatus();
+</script>
+</body>
+</html>
