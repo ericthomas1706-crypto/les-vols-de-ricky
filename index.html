@@ -7,73 +7,68 @@
 <meta name="description" content="Pars te perdre. Reviens transformé. La web-série québécoise d'aventure et de transformation personnelle.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --black:#07070a;
-  --deep:#0d0d10;
-  --orange:#ff4d1a;
-  --orange2:#ff6b35;
-  --gold:#ffb300;
-  --cream:#f5f0e8;
-  --gray:#111115;
-  --gray2:#1a1a1f;
+  --bg:     #080d16;
+  --bg2:    #0c1420;
+  --bg3:    #101a2a;
+  --amber:  #c9935a;
+  --teal:   #1a9aad;
+  --cream:  #f0e5d0;
+  --gold:   #d4a535;
+  --forest: #2d6e42;
+  --stone:  #8a7a65;
+  --dark:   #05080f;
 }
 html{scroll-behavior:smooth}
 body{
-  background:var(--black);
-  color:var(--cream);
-  font-family:'Inter',sans-serif;
-  overflow-x:hidden;
+  background:var(--bg);color:var(--cream);
+  font-family:'Inter',sans-serif;overflow-x:hidden;
 }
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--black)}
-::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--amber);border-radius:2px}
 
 /* ── NAV ── */
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
-  padding:1rem 2.5rem;
+  padding:1.1rem 2.5rem;
   display:flex;justify-content:space-between;align-items:center;
   transition:.4s;
 }
 #nav.scrolled{
-  background:rgba(7,7,10,.94);
+  background:rgba(8,13,22,.95);
   backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,77,26,.2);
+  border-bottom:1px solid rgba(201,147,90,.2);
 }
 .logo{
-  font-family:'Anton',sans-serif;font-size:1.8rem;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
+  font-family:'Anton',sans-serif;font-size:1.8rem;letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--amber),var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  text-decoration:none;letter-spacing:.08em;
+  text-decoration:none;
 }
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{
-  color:rgba(245,240,232,.6);text-decoration:none;
-  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  transition:color .2s;
+  color:rgba(240,229,208,.6);text-decoration:none;
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;
 }
 .nav-links a:hover{color:var(--cream)}
 .nav-cta{
-  background:var(--orange)!important;
-  color:white!important;
-  padding:.5rem 1.3rem;border-radius:4px;
-  font-weight:700!important;
+  background:var(--amber)!important;color:white!important;
+  padding:.5rem 1.3rem;border-radius:5px;font-weight:700!important;
 }
+.nav-cta:hover{opacity:.9}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
-.hamburger span{display:block;width:24px;height:2px;background:var(--cream);border-radius:2px;transition:.3s}
+.hamburger span{display:block;width:24px;height:2px;background:var(--cream);border-radius:2px}
 .mobile-menu{
-  display:none;position:fixed;inset:0;
-  background:var(--black);z-index:999;
+  display:none;position:fixed;inset:0;background:var(--bg);z-index:999;
   flex-direction:column;align-items:center;justify-content:center;gap:2rem;
 }
 .mobile-menu.open{display:flex}
 .mobile-menu a{font-family:'Anton',sans-serif;font-size:2.2rem;color:var(--cream);text-decoration:none;text-transform:uppercase}
-.mobile-menu a:hover{color:var(--orange)}
+.mobile-menu a:hover{color:var(--amber)}
 .close-btn{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:var(--cream);cursor:pointer;background:none;border:none}
 
 /* ── HERO ── */
@@ -82,178 +77,145 @@ body{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:2rem;overflow:hidden;
 }
-#particleCanvas{
-  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;
+.hero-photo{
+  position:absolute;inset:0;
+  background:url('photos/camino-montagne.jpg') center center / cover no-repeat;
+  /* Fallback si la photo n'est pas encore là : */
+  background-color:#0d1e35;
+  background-image:
+    url('photos/camino-montagne.jpg'),
+    linear-gradient(160deg,#0d2a1a 0%,#0a1e35 40%,#050d1a 100%);
 }
 .hero-overlay{
   position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 70% 60% at 50% 80%,rgba(255,77,26,.22) 0%,transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 30%,rgba(255,179,0,.08) 0%,transparent 60%),
-    linear-gradient(180deg,rgba(7,7,10,0) 0%,rgba(7,7,10,.5) 100%);
+    linear-gradient(0deg, rgba(5,8,15,.92) 0%, rgba(5,8,15,.55) 40%, rgba(5,8,15,.3) 100%);
   z-index:1;
 }
-.hero-content{position:relative;z-index:2;max-width:1000px}
+.hero-content{position:relative;z-index:2;max-width:960px}
 
-.hero-ep{
+.hero-badge{
   display:inline-flex;align-items:center;gap:.6rem;
-  background:rgba(255,77,26,.12);
-  border:1px solid rgba(255,77,26,.4);
-  color:var(--orange);
-  font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  background:rgba(201,147,90,.15);border:1px solid rgba(201,147,90,.4);
+  color:var(--amber);font-size:.68rem;font-weight:800;
+  letter-spacing:.18em;text-transform:uppercase;
   padding:.4rem 1.1rem;border-radius:50px;margin-bottom:2rem;
-  animation:pulse-badge 3s ease-in-out infinite;
+  animation:pulseBadge 3s ease-in-out infinite;
 }
-@keyframes pulse-badge{
-  0%,100%{box-shadow:0 0 0 0 rgba(255,77,26,.4)}
-  50%{box-shadow:0 0 0 8px rgba(255,77,26,0)}
+@keyframes pulseBadge{
+  0%,100%{box-shadow:0 0 0 0 rgba(201,147,90,.4)}
+  50%{box-shadow:0 0 0 8px rgba(201,147,90,0)}
 }
-.hero-ep::before{content:'●';font-size:.5rem;animation:blink 1.5s infinite}
+.hero-badge::before{content:'●';font-size:.5rem;animation:blink 1.5s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
 .hero-title{
   font-family:'Anton',sans-serif;
   font-size:clamp(3.5rem,12vw,9rem);
-  text-transform:uppercase;line-height:.9;
-  margin-bottom:1.5rem;
+  text-transform:uppercase;line-height:.9;margin-bottom:1.5rem;
 }
-.ht-white{
-  display:block;color:var(--cream);
-  animation:slideUp .8s cubic-bezier(.16,1,.3,1) both;
-}
-.ht-fire{
+.ht1{display:block;color:var(--cream);animation:slideUp .8s cubic-bezier(.16,1,.3,1) both}
+.ht2{
   display:block;
-  background:linear-gradient(90deg,var(--orange),var(--gold),var(--orange));
+  background:linear-gradient(90deg,var(--amber),var(--gold));
   background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:slideUp .8s .1s cubic-bezier(.16,1,.3,1) both, fire-shift 4s linear infinite;
+  animation:slideUp .8s .1s cubic-bezier(.16,1,.3,1) both, shimmer 4s linear infinite;
 }
-.ht-sub{
-  display:block;color:rgba(245,240,232,.5);
-  font-size:clamp(1.5rem,4vw,3.5rem);
-  animation:slideUp .8s .2s cubic-bezier(.16,1,.3,1) both;
-}
-@keyframes slideUp{
-  from{opacity:0;transform:translateY(40px)}
-  to{opacity:1;transform:none}
-}
-@keyframes fire-shift{
-  0%{background-position:0% center}
-  100%{background-position:200% center}
-}
+.ht3{display:block;color:rgba(240,229,208,.6);animation:slideUp .8s .2s cubic-bezier(.16,1,.3,1) both}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
 
 .hero-tagline{
-  font-size:clamp(1rem,2vw,1.25rem);
-  color:rgba(245,240,232,.55);
-  max-width:520px;margin:0 auto 2.5rem;
-  font-weight:300;line-height:1.7;
+  font-size:clamp(1rem,2vw,1.2rem);color:rgba(240,229,208,.65);
+  max-width:540px;margin:0 auto 2.5rem;font-weight:300;line-height:1.8;
   animation:slideUp .8s .3s cubic-bezier(.16,1,.3,1) both;
 }
 .hero-btns{
   display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
   animation:slideUp .8s .4s cubic-bezier(.16,1,.3,1) both;
 }
-.btn-fire{
+.btn-main{
   position:relative;overflow:hidden;
-  background:var(--orange);color:white;
+  background:var(--amber);color:white;
   padding:1rem 2.2rem;
-  font-family:'Anton',sans-serif;font-size:1.05rem;
-  letter-spacing:.05em;text-transform:uppercase;
-  text-decoration:none;border-radius:5px;border:none;
-  cursor:pointer;display:inline-block;
+  font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;border-radius:5px;border:none;cursor:pointer;display:inline-block;
   transition:transform .2s,box-shadow .2s;
 }
-.btn-fire::after{
+.btn-main::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.2) 50%,transparent 100%);
-  transform:translateX(-100%);transition:.4s;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-100%);transition:.5s;
 }
-.btn-fire:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,77,26,.5)}
-.btn-fire:hover::after{transform:translateX(100%)}
-.btn-ghost{
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(201,147,90,.45)}
+.btn-main:hover::after{transform:translateX(100%)}
+.btn-outline{
   background:transparent;color:var(--cream);
   padding:1rem 2.2rem;
-  font-family:'Anton',sans-serif;font-size:1.05rem;
-  letter-spacing:.05em;text-transform:uppercase;
-  text-decoration:none;border-radius:5px;
-  border:2px solid rgba(245,240,232,.2);
-  cursor:pointer;display:inline-block;
-  transition:border-color .2s,color .2s,transform .2s;
+  font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;border-radius:5px;border:2px solid rgba(240,229,208,.25);
+  cursor:pointer;display:inline-block;transition:border-color .2s,color .2s,transform .2s;
 }
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
 
 .hero-scroll{
-  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:2rem;left:50%;
+  animation:slideUp 1s 1.5s both, floatHint 2.5s ease-in-out 2.5s infinite;
+  transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:.4rem;
-  color:rgba(245,240,232,.25);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
-  animation:fadeInScroll 1s 1.5s both, floatHint 2s ease-in-out infinite;
+  color:rgba(240,229,208,.3);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
 }
-@keyframes fadeInScroll{from{opacity:0}to{opacity:1}}
 @keyframes floatHint{
   0%,100%{transform:translateX(-50%) translateY(0)}
   50%{transform:translateX(-50%) translateY(8px)}
 }
 .hero-scroll svg{width:16px;stroke:currentColor;fill:none;stroke-width:1.5}
 
-/* ── MARQUEE STRIP ── */
+/* ── MARQUEE ── */
 .marquee-strip{
-  background:var(--orange);
+  background:linear-gradient(90deg,var(--forest),#1e5530,var(--forest));
   padding:.7rem 0;overflow:hidden;
-  border-top:1px solid rgba(255,255,255,.1);
-  border-bottom:1px solid rgba(255,255,255,.1);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 .marquee-track{
-  display:flex;gap:3rem;
-  animation:marquee 18s linear infinite;
-  white-space:nowrap;
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 22s linear infinite;
 }
 .marquee-track span{
-  font-family:'Anton',sans-serif;
-  font-size:.85rem;letter-spacing:.12em;color:white;
-  opacity:.9;text-transform:uppercase;flex-shrink:0;
+  font-family:'Anton',sans-serif;font-size:.82rem;
+  letter-spacing:.12em;color:rgba(240,229,208,.85);text-transform:uppercase;flex-shrink:0;
 }
-.marquee-track .dot{color:rgba(255,255,255,.4)}
-@keyframes marquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
+.marquee-track .dot{color:rgba(240,229,208,.3)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── SECTIONS ── */
+/* ── SHARED ── */
 section{padding:7rem 2rem;position:relative}
 .container{max-width:1100px;margin:0 auto}
-
 .sec-label{
-  font-size:.65rem;font-weight:800;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--orange);margin-bottom:.7rem;
+  font-size:.65rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:.7rem;
   display:flex;align-items:center;gap:.5rem;
 }
-.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--orange)}
+.sec-label::before{content:'';display:block;width:20px;height:2px;background:var(--amber)}
 .sec-title{
   font-family:'Anton',sans-serif;
-  font-size:clamp(2.2rem,6vw,4.5rem);
-  text-transform:uppercase;line-height:.95;
-  margin-bottom:1rem;
+  font-size:clamp(2.2rem,5.5vw,4.2rem);
+  text-transform:uppercase;line-height:.95;margin-bottom:1rem;
 }
-.sec-title .o{
-  background:linear-gradient(90deg,var(--orange),var(--gold));
+.sec-title .a{
+  background:linear-gradient(90deg,var(--amber),var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.sec-sub{font-size:1rem;color:rgba(245,240,232,.55);line-height:1.8;max-width:560px}
-
-/* ── DIAGONAL DIVIDER ── */
-.divider-down{
-  position:absolute;bottom:-1px;left:0;right:0;height:80px;overflow:hidden;z-index:2;
+.sec-title .t{
+  background:linear-gradient(90deg,var(--teal),#4dc8d8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.divider-down svg{position:absolute;bottom:0;width:100%;height:100%}
-.divider-up{
-  position:absolute;top:-1px;left:0;right:0;height:80px;overflow:hidden;z-index:2;
-}
-.divider-up svg{position:absolute;top:0;width:100%;height:100%}
+.sec-sub{font-size:1rem;color:rgba(240,229,208,.55);line-height:1.8;max-width:560px}
 
 /* ── CONCEPT ── */
-#concept{background:var(--gray);padding-top:9rem}
-
+#concept{background:var(--bg2);padding-top:9rem}
 .concept-layout{
   display:grid;grid-template-columns:1.1fr 1fr;
   gap:5rem;align-items:center;margin-top:3.5rem;
@@ -262,63 +224,58 @@ section{padding:7rem 2rem;position:relative}
 .pillar{
   display:flex;align-items:flex-start;gap:1rem;
   padding:1.5rem;
-  background:rgba(255,255,255,.025);
+  background:rgba(255,255,255,.02);
   border:1px solid rgba(255,255,255,.05);
   border-left:3px solid transparent;
   border-radius:0 10px 10px 0;
-  transition:border-color .3s,transform .3s,background .3s;
-  cursor:default;
+  transition:border-color .3s,transform .3s,background .3s;cursor:default;
 }
-.pillar:hover{
-  border-left-color:var(--orange);
-  background:rgba(255,77,26,.06);
-  transform:translateX(8px);
-}
+.pillar:hover{border-left-color:var(--amber);background:rgba(201,147,90,.05);transform:translateX(8px)}
 .pillar-num{
   font-family:'Anton',sans-serif;font-size:2.5rem;
-  color:rgba(255,77,26,.2);line-height:1;flex-shrink:0;width:50px;
+  color:rgba(201,147,90,.18);line-height:1;flex-shrink:0;width:50px;
 }
-.pillar h3{
-  font-family:'Anton',sans-serif;font-size:1.05rem;
-  color:var(--gold);letter-spacing:.04em;margin-bottom:.35rem;
-}
-.pillar p{font-size:.875rem;color:rgba(245,240,232,.5);line-height:1.6}
+.pillar h3{font-family:'Anton',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.04em;margin-bottom:.35rem}
+.pillar p{font-size:.875rem;color:rgba(240,229,208,.5);line-height:1.6}
 
-.concept-visual{position:relative}
-.big-number{
-  font-family:'Anton',sans-serif;font-size:clamp(5rem,10vw,8rem);
-  background:linear-gradient(135deg,rgba(255,77,26,.3),rgba(255,179,0,.2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  line-height:1;text-align:center;margin-bottom:-1rem;
+/* Photo Concept */
+.concept-photo{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:3/4;background:var(--bg3);
 }
-.concept-card{
-  background:linear-gradient(135deg,rgba(255,77,26,.08),rgba(255,179,0,.04));
-  border:1px solid rgba(255,77,26,.2);
-  border-radius:16px;padding:2.5rem;text-align:center;
-  position:relative;overflow:hidden;
+.concept-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  display:block;
 }
-.concept-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,77,26,.05),transparent);
-  pointer-events:none;
+.concept-photo-fallback{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#1a3a28 0%,#0d2a40 60%,#050d1a 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;opacity:.3;
 }
-.concept-card h3{
-  font-family:'Anton',sans-serif;font-size:2rem;
-  color:var(--cream);margin-bottom:1rem;
+.concept-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(8,13,22,.8) 0%,transparent 50%);
 }
-.concept-card p{font-size:.9rem;color:rgba(245,240,232,.55);line-height:1.7}
+.concept-photo-caption{
+  position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;
+  font-family:'Anton',sans-serif;font-size:1.1rem;
+  color:white;letter-spacing:.03em;
+}
+.concept-photo-caption span{
+  display:block;font-family:'Inter',sans-serif;
+  font-size:.75rem;color:rgba(255,255,255,.55);font-weight:400;margin-top:.2rem;
+}
 .concept-tag{
-  display:inline-block;margin-top:1.5rem;
-  background:rgba(255,77,26,.15);
-  border:1px solid rgba(255,77,26,.3);
-  color:var(--orange);font-size:.7rem;font-weight:700;
+  display:inline-block;margin-top:.75rem;
+  background:rgba(201,147,90,.15);border:1px solid rgba(201,147,90,.3);
+  color:var(--amber);font-size:.68rem;font-weight:700;
   letter-spacing:.12em;text-transform:uppercase;
-  padding:.35rem .9rem;border-radius:50px;
+  padding:.3rem .9rem;border-radius:50px;
 }
 
 /* ── HISTOIRE ── */
-#histoire{background:var(--black);padding-top:9rem}
-
+#histoire{background:var(--bg);padding-top:9rem}
 .histoire-layout{
   display:grid;grid-template-columns:1fr 1fr;
   gap:5rem;align-items:start;margin-top:3.5rem;
@@ -327,203 +284,169 @@ section{padding:7rem 2rem;position:relative}
 .t-item{display:flex;gap:1.1rem;padding-bottom:2rem}
 .t-left{display:flex;flex-direction:column;align-items:center}
 .t-dot{
-  width:12px;height:12px;border-radius:50%;
-  background:var(--orange);flex-shrink:0;margin-top:4px;
-  box-shadow:0 0 8px rgba(255,77,26,.6);
+  width:11px;height:11px;border-radius:50%;
+  background:var(--amber);flex-shrink:0;margin-top:5px;
+  box-shadow:0 0 8px rgba(201,147,90,.5);
 }
-.t-dot.g{background:var(--gold);box-shadow:0 0 8px rgba(255,179,0,.6)}
+.t-dot.teal{background:var(--teal);box-shadow:0 0 8px rgba(26,154,173,.5)}
+.t-dot.gold{background:var(--gold);box-shadow:0 0 8px rgba(212,165,53,.5)}
 .t-line{width:2px;flex:1;margin-top:4px;background:rgba(255,255,255,.07)}
-.t-content h4{
-  font-family:'Anton',sans-serif;font-size:1rem;
-  color:var(--gold);letter-spacing:.03em;margin-bottom:.35rem;
-}
-.t-content p{font-size:.875rem;color:rgba(245,240,232,.5);line-height:1.6}
+.t-content h4{font-family:'Anton',sans-serif;font-size:1rem;color:var(--gold);letter-spacing:.03em;margin-bottom:.35rem}
+.t-content p{font-size:.875rem;color:rgba(240,229,208,.5);line-height:1.6}
 
 .h-sticky{position:sticky;top:110px}
 .quote-block{
-  background:linear-gradient(135deg,rgba(255,77,26,.08),rgba(255,179,0,.04));
-  border-left:4px solid var(--orange);
+  background:linear-gradient(135deg,rgba(201,147,90,.08),rgba(212,165,53,.04));
+  border-left:4px solid var(--amber);
   border-radius:0 14px 14px 0;
-  padding:2rem;margin-bottom:2rem;
+  padding:2rem;margin-bottom:1.5rem;
 }
 .quote-block blockquote{
-  font-family:'Anton',sans-serif;font-size:1.3rem;
+  font-family:'Anton',sans-serif;font-size:1.25rem;
   line-height:1.35;color:var(--cream);margin-bottom:.75rem;
 }
 .quote-block cite{font-size:.82rem;color:var(--gold);font-style:normal;font-weight:700}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.stat-card{
-  background:var(--gray);border-radius:12px;padding:1.4rem;text-align:center;
-  border:1px solid rgba(255,255,255,.05);
-  transition:border-color .3s,transform .3s;
-}
-.stat-card:hover{border-color:var(--orange);transform:translateY(-4px)}
-.stat-num{
-  font-family:'Anton',sans-serif;font-size:2.5rem;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  line-height:1;
-}
-.stat-label{font-size:.68rem;color:rgba(245,240,232,.4);text-transform:uppercase;letter-spacing:.07em;margin-top:.35rem}
 
-/* ── EXPERIENCE ── */
-#experience{background:var(--gray);padding-top:9rem;text-align:center}
-.exp-intro{max-width:640px;margin:0 auto 3rem}
-.exp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
-.exp-card{
-  background:var(--black);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;padding:2.2rem 1.5rem;
-  transition:border-color .3s,transform .3s,box-shadow .3s;
+/* Photo Grid Histoire */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem}
+.photo-slot{
+  border-radius:10px;overflow:hidden;
+  aspect-ratio:1;background:var(--bg3);
+  position:relative;
 }
-.exp-card:hover{
-  border-color:var(--orange);
-  transform:translateY(-10px);
-  box-shadow:0 20px 60px rgba(255,77,26,.15);
+.photo-slot img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s;
 }
-.exp-icon{font-size:2.5rem;margin-bottom:1.2rem}
-.exp-card h3{
-  font-family:'Anton',sans-serif;font-size:1.05rem;
-  color:var(--gold);letter-spacing:.04em;margin-bottom:.7rem;
+.photo-slot:hover img{transform:scale(1.05)}
+.photo-slot-fb{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;opacity:.2;
 }
-.exp-card p{font-size:.875rem;color:rgba(245,240,232,.5);line-height:1.6}
+.photo-slot-fb.maroc{background:linear-gradient(135deg,#2a1a08,#4a3010)}
+.photo-slot-fb.ocean{background:linear-gradient(135deg,#081a2a,#104060)}
+.photo-slot-fb.seville{background:linear-gradient(135deg,#1a1408,#3a2c10)}
+.photo-slot-fb.nature{background:linear-gradient(135deg,#081a10,#103020)}
 
-.exp-highlight{
-  background:linear-gradient(135deg,var(--orange),#c43010);
-  border-radius:20px;padding:3.5rem;text-align:left;
-  position:relative;overflow:hidden;
+/* ── EXPÉRIENCE ── */
+#experience{background:var(--bg2);padding-top:9rem}
+.exp-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;margin-top:3.5rem;
 }
-.exp-highlight::before{
-  content:'48H';
-  position:absolute;right:-2rem;top:50%;transform:translateY(-50%);
-  font-family:'Anton',sans-serif;font-size:12rem;
-  color:rgba(255,255,255,.07);line-height:1;pointer-events:none;
+.exp-photo{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:4/5;background:var(--bg3);order:-1;
 }
-.exp-highlight::after{
-  content:'';position:absolute;top:0;right:0;
-  width:40%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.03));
-}
-.exp-highlight h3{
-  font-family:'Anton',sans-serif;font-size:2.2rem;
-  color:white;margin-bottom:1rem;
-}
-.exp-highlight p{
-  font-size:1rem;color:rgba(255,255,255,.8);
-  line-height:1.7;max-width:520px;
-}
-
-/* ── ÉPISODES ── */
-#episodes{background:var(--black);padding-top:9rem}
-.eps-head{
-  display:flex;justify-content:space-between;
-  align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;
-}
-.eps-btns{display:flex;gap:.75rem}
-
-.eps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.ep-card{
-  border-radius:14px;overflow:hidden;
-  background:var(--gray);
-  text-decoration:none;
-  transition:transform .3s,box-shadow .3s;
+.exp-photo img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
   display:block;
 }
-.ep-card:hover{
-  transform:translateY(-6px) scale(1.01);
-  box-shadow:0 24px 60px rgba(0,0,0,.5);
+.exp-photo-fb{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#081a10 0%,#0d2a18 50%,#050d0a 100%);
+  display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.2;
 }
+.exp-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(8,13,22,.5) 0%,transparent 60%);
+}
+.exp-content{}
+.exp-cards{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.exp-card{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1.25rem;background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.05);border-radius:10px;
+  transition:border-color .3s,transform .3s;
+}
+.exp-card:hover{border-color:rgba(201,147,90,.3);transform:translateX(6px)}
+.exp-icon{
+  font-size:1.5rem;width:44px;height:44px;flex-shrink:0;
+  background:rgba(201,147,90,.1);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.exp-card h3{font-family:'Anton',sans-serif;font-size:1rem;color:var(--gold);margin-bottom:.3rem;letter-spacing:.04em}
+.exp-card p{font-size:.875rem;color:rgba(240,229,208,.5);line-height:1.55}
+.exp-cta-box{
+  margin-top:2rem;padding:1.75rem;
+  background:linear-gradient(135deg,rgba(201,147,90,.08),rgba(26,154,173,.05));
+  border:1px solid rgba(201,147,90,.2);border-radius:12px;
+  text-align:center;
+}
+.exp-cta-box h3{font-family:'Anton',sans-serif;font-size:2rem;color:var(--cream);margin-bottom:.5rem}
+.exp-cta-box p{font-size:.9rem;color:rgba(240,229,208,.55);margin-bottom:1.5rem;line-height:1.6}
+
+/* ── ÉPISODES ── */
+#episodes{background:var(--bg)}
+.eps-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;
+}
+.eps-btns{display:flex;gap:.75rem}
+.eps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.ep-card{
+  border-radius:14px;overflow:hidden;background:var(--bg2);
+  text-decoration:none;transition:transform .3s,box-shadow .3s;display:block;
+}
+.ep-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.5)}
 .ep-thumb{
   aspect-ratio:16/9;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
-.ep-thumb.t1{background:linear-gradient(135deg,#1a0600,#3d1200,#1a0600)}
-.ep-thumb.t2{background:linear-gradient(135deg,#001405,#003512,#001405)}
-.ep-thumb.t3{background:linear-gradient(135deg,#080018,#180038,#080018)}
-.ep-thumb::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.04),transparent 70%);
-}
+.ep-thumb.t1{background:linear-gradient(135deg,#0d1a08,#1a3510)}
+.ep-thumb.t2{background:linear-gradient(135deg,#08101a,#102035)}
+.ep-thumb.t3{background:linear-gradient(135deg,#1a1408,#35280d)}
 .play-btn{
-  width:58px;height:58px;
-  background:rgba(255,77,26,.9);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,background .2s,box-shadow .2s;
-  position:relative;z-index:1;
+  width:56px;height:56px;background:rgba(201,147,90,.85);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;
 }
-.play-btn::before{
-  content:'';position:absolute;inset:-6px;
-  border:2px solid rgba(255,77,26,.3);
-  border-radius:50%;transition:transform .3s,opacity .3s;
-}
-.ep-card:hover .play-btn{
-  transform:scale(1.2);
-  background:var(--orange);
-  box-shadow:0 0 40px rgba(255,77,26,.6);
-}
-.ep-card:hover .play-btn::before{transform:scale(1.3);opacity:0}
-.play-btn svg{width:20px;fill:white;margin-left:4px}
+.ep-card:hover .play-btn{transform:scale(1.18);box-shadow:0 0 40px rgba(201,147,90,.5)}
+.play-btn svg{width:19px;fill:white;margin-left:4px}
 .ep-badge{
   position:absolute;top:.85rem;left:.85rem;
-  background:var(--orange);color:white;
-  font-family:'Anton',sans-serif;font-size:.7rem;letter-spacing:.08em;
-  padding:.28rem .7rem;border-radius:4px;z-index:2;
+  background:var(--amber);color:white;
+  font-family:'Anton',sans-serif;font-size:.68rem;letter-spacing:.08em;
+  padding:.28rem .7rem;border-radius:4px;
 }
-.ep-badge.gold{background:var(--gold);color:var(--black)}
-.ep-badge.coming{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);backdrop-filter:blur(4px)}
+.ep-badge.gold-b{background:var(--gold);color:#0d0a00}
+.ep-badge.dim{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);backdrop-filter:blur(4px)}
 .ep-info{padding:1.4rem}
-.ep-info h3{
-  font-family:'Anton',sans-serif;font-size:1rem;
-  color:var(--cream);margin-bottom:.4rem;letter-spacing:.03em;
-}
-.ep-info p{font-size:.8rem;color:rgba(245,240,232,.4);line-height:1.4}
-
+.ep-info h3{font-family:'Anton',sans-serif;font-size:1rem;color:var(--cream);margin-bottom:.4rem;letter-spacing:.03em}
+.ep-info p{font-size:.8rem;color:rgba(240,229,208,.4);line-height:1.4}
 .socials{display:flex;gap:1rem;margin-top:3rem;justify-content:center;flex-wrap:wrap}
 .social-btn{
   display:flex;align-items:center;gap:.55rem;
   padding:.75rem 1.6rem;
   border:1px solid rgba(255,255,255,.12);border-radius:50px;
-  color:rgba(245,240,232,.7);text-decoration:none;
+  color:rgba(240,229,208,.65);text-decoration:none;
   font-size:.82rem;font-weight:600;
   transition:border-color .2s,color .2s,background .2s;
 }
-.social-btn:hover{border-color:var(--orange);color:white;background:rgba(255,77,26,.1)}
-.social-btn svg{width:17px;fill:currentColor}
+.social-btn:hover{border-color:var(--amber);color:var(--cream);background:rgba(201,147,90,.1)}
+.social-btn svg{width:16px;fill:currentColor}
 
 /* ── CONCOURS ── */
-#concours{
-  background:var(--gray);
-  padding-top:9rem;text-align:center;
-}
+#concours{background:var(--bg2);text-align:center}
 .concours-inner{max-width:820px;margin:0 auto}
 .prize-box{
-  background:linear-gradient(135deg,rgba(255,179,0,.1),rgba(255,77,26,.06));
+  background:linear-gradient(135deg,rgba(212,165,53,.09),rgba(201,147,90,.05));
   border:2px solid var(--gold);border-radius:24px;
-  padding:3.5rem;margin-top:3rem;
-  position:relative;overflow:hidden;
+  padding:3.5rem;margin-top:3rem;position:relative;overflow:hidden;
 }
-.prize-box::after{
-  content:'🏆';font-size:12rem;
-  position:absolute;right:-2rem;top:-1rem;opacity:.07;
-  pointer-events:none;
-}
+.prize-box::after{content:'🏆';font-size:12rem;position:absolute;right:-2rem;top:-1rem;opacity:.06;pointer-events:none}
 .prize-emoji{font-size:3.5rem;margin-bottom:1.25rem}
 .prize-box h3{
-  font-family:'Anton',sans-serif;
-  font-size:clamp(2rem,5vw,3rem);
-  background:linear-gradient(90deg,var(--gold),var(--orange));
+  font-family:'Anton',sans-serif;font-size:clamp(2rem,5vw,3rem);
+  background:linear-gradient(90deg,var(--gold),var(--amber));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   margin-bottom:1rem;
 }
-.prize-box p{
-  color:rgba(245,240,232,.6);font-size:1rem;
-  line-height:1.7;max-width:580px;margin:0 auto 2rem;
-}
+.prize-box p{color:rgba(240,229,208,.6);font-size:1rem;line-height:1.7;max-width:580px;margin:0 auto 2rem}
 
 /* ── PRIVÉE ── */
-#privee{background:var(--black);padding-top:9rem}
+#privee{background:var(--bg)}
 .privee-grid{
   display:grid;grid-template-columns:1fr 1fr;
   gap:5rem;align-items:center;margin-top:3.5rem;
@@ -533,98 +456,82 @@ section{padding:7rem 2rem;position:relative}
   display:flex;align-items:center;gap:1rem;
   padding:1.1rem 1.2rem;
   background:rgba(255,255,255,.025);
-  border:1px solid rgba(255,255,255,.05);
-  border-radius:8px;
+  border:1px solid rgba(255,255,255,.05);border-radius:8px;
   transition:border-color .3s,background .3s;
 }
-.feat-item:hover{
-  border-color:rgba(255,77,26,.3);
-  background:rgba(255,77,26,.05);
-}
+.feat-item:hover{border-color:rgba(201,147,90,.3);background:rgba(201,147,90,.04)}
 .check{
   width:24px;height:24px;border-radius:50%;
-  background:var(--orange);flex-shrink:0;
+  background:var(--amber);flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   font-size:.72rem;color:white;font-weight:700;
-  box-shadow:0 0 10px rgba(255,77,26,.3);
+  box-shadow:0 0 10px rgba(201,147,90,.25);
 }
-.feat-item span{font-size:.9rem;color:rgba(245,240,232,.75)}
+.feat-item span{font-size:.9rem;color:rgba(240,229,208,.75)}
 .price-card{
-  background:var(--gray);
-  border:2px solid var(--orange);
+  background:var(--bg2);border:2px solid var(--amber);
   border-radius:20px;padding:3rem;text-align:center;
+  box-shadow:0 0 60px rgba(201,147,90,.12);
   position:relative;overflow:hidden;
-  box-shadow:0 0 60px rgba(255,77,26,.15);
 }
 .price-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
+  background:linear-gradient(90deg,var(--amber),var(--gold));
 }
 .price-amount{
   font-family:'Anton',sans-serif;font-size:4rem;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
+  background:linear-gradient(90deg,var(--amber),var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   line-height:1;margin-bottom:.3rem;
 }
-.price-detail{font-size:.82rem;color:rgba(245,240,232,.4);margin-bottom:2rem}
-.price-card p{
-  font-size:.9rem;color:rgba(245,240,232,.6);
-  line-height:1.7;margin-bottom:2rem;
-}
+.price-detail{font-size:.82rem;color:rgba(240,229,208,.4);margin-bottom:2rem}
+.price-card p{font-size:.9rem;color:rgba(240,229,208,.6);line-height:1.7;margin-bottom:2rem}
 
 /* ── PARTENAIRES ── */
-#partenaires{background:var(--gray);padding-top:9rem;text-align:center}
+#partenaires{background:var(--bg2);text-align:center}
 .part-inner{max-width:740px;margin:0 auto}
 .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:3rem 0}
 .benefit{
-  background:var(--black);border-radius:12px;padding:1.75rem;
+  background:var(--bg);border-radius:12px;padding:1.75rem;
   border:1px solid rgba(255,255,255,.06);
   transition:border-color .3s,transform .3s;
 }
-.benefit:hover{border-color:rgba(255,179,0,.3);transform:translateY(-5px)}
+.benefit:hover{border-color:rgba(212,165,53,.3);transform:translateY(-5px)}
 .benefit-icon{font-size:1.8rem;margin-bottom:.75rem}
-.benefit h4{
-  font-family:'Anton',sans-serif;font-size:.95rem;
-  color:var(--gold);margin-bottom:.5rem;letter-spacing:.03em;
-}
-.benefit p{font-size:.82rem;color:rgba(245,240,232,.45);line-height:1.55}
+.benefit h4{font-family:'Anton',sans-serif;font-size:.95rem;color:var(--gold);margin-bottom:.5rem;letter-spacing:.03em}
+.benefit p{font-size:.82rem;color:rgba(240,229,208,.45);line-height:1.55}
 
 /* ── CANDIDATURE ── */
-#candidature{background:var(--black);padding-top:9rem}
+#candidature{background:var(--bg)}
 .form-wrap{max-width:700px;margin:3rem auto 0}
-
 .type-toggle{
   display:grid;grid-template-columns:1fr 1fr;
-  background:var(--gray);border-radius:10px;padding:4px;margin-bottom:2rem;
+  background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:2rem;
 }
 .toggle-btn{
   padding:.85rem 1rem;border:none;background:transparent;
-  color:rgba(245,240,232,.4);
-  font-family:'Inter',sans-serif;font-size:.82rem;font-weight:700;
-  letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border-radius:7px;
-  transition:.2s;
+  color:rgba(240,229,208,.4);font-family:'Inter',sans-serif;
+  font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  cursor:pointer;border-radius:7px;transition:.2s;
 }
-.toggle-btn.active{background:var(--orange);color:white;box-shadow:0 4px 20px rgba(255,77,26,.35)}
-
+.toggle-btn.active{background:var(--amber);color:white;box-shadow:0 4px 20px rgba(201,147,90,.35)}
 .form-note{
-  background:rgba(255,179,0,.07);
-  border:1px solid rgba(255,179,0,.2);
+  background:rgba(212,165,53,.07);border:1px solid rgba(212,165,53,.2);
   border-radius:10px;padding:1.1rem 1.25rem;
-  font-size:.82rem;color:rgba(245,240,232,.6);
+  font-size:.82rem;color:rgba(240,229,208,.6);
   margin-bottom:1.75rem;line-height:1.6;
 }
 .form-note strong{color:var(--gold)}
-
 .form-group{margin-bottom:1.15rem}
 .form-group label{
   display:block;font-size:.72rem;font-weight:700;
   letter-spacing:.09em;text-transform:uppercase;
-  color:rgba(245,240,232,.45);margin-bottom:.5rem;
+  color:rgba(240,229,208,.45);margin-bottom:.5rem;
 }
 .form-group input,
 .form-group select,
 .form-group textarea{
-  width:100%;background:var(--gray);
+  width:100%;background:var(--bg2);
   border:1px solid rgba(255,255,255,.08);
   border-radius:9px;padding:.9rem 1.1rem;
   color:var(--cream);font-family:'Inter',sans-serif;font-size:.95rem;
@@ -633,8 +540,8 @@ section{padding:7rem 2rem;position:relative}
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus{
-  border-color:var(--orange);
-  box-shadow:0 0 0 3px rgba(255,77,26,.12);
+  border-color:var(--amber);
+  box-shadow:0 0 0 3px rgba(201,147,90,.12);
 }
 .form-group select{cursor:pointer}
 .form-group textarea{min-height:130px;resize:vertical}
@@ -642,61 +549,52 @@ section{padding:7rem 2rem;position:relative}
 
 /* ── FOOTER ── */
 footer{
-  background:#040405;
-  border-top:1px solid rgba(255,255,255,.05);
-  padding:3.5rem 2rem;
+  background:#030508;
+  border-top:1px solid rgba(255,255,255,.05);padding:3.5rem 2rem;
 }
 .footer-inner{
   max-width:1100px;margin:0 auto;
-  display:flex;flex-direction:column;
-  align-items:center;text-align:center;gap:1.5rem;
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;
 }
 .footer-logo{
   font-family:'Anton',sans-serif;font-size:2.4rem;letter-spacing:.1em;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
+  background:linear-gradient(90deg,var(--amber),var(--gold));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.footer-slogan{font-style:italic;color:rgba(245,240,232,.3);font-size:.9rem}
+.footer-slogan{font-style:italic;color:rgba(240,229,208,.3);font-size:.9rem}
 .footer-nav{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
 .footer-nav a{
-  color:rgba(245,240,232,.3);text-decoration:none;
+  color:rgba(240,229,208,.3);text-decoration:none;
   font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;
 }
-.footer-nav a:hover{color:var(--orange)}
-.footer-copy{font-size:.7rem;color:rgba(245,240,232,.18)}
+.footer-nav a:hover{color:var(--amber)}
+.footer-copy{font-size:.7rem;color:rgba(240,229,208,.18)}
 .footer-copy a{color:inherit;text-decoration:none}
 
 /* ── REVEAL ── */
-.reveal{
-  opacity:0;transform:translateY(32px);
-  transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
-}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:none}
-.d1{transition-delay:.1s}
-.d2{transition-delay:.2s}
-.d3{transition-delay:.3s}
-.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.reveal-left.visible{opacity:1;transform:none}
-.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
-.reveal-right.visible{opacity:1;transform:none}
+.rl{opacity:0;transform:translateX(-28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rl.visible{opacity:1;transform:none}
+.rr{opacity:0;transform:translateX(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rr.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
 
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
-  .nav-links{display:none}
-  .hamburger{display:flex}
+  .nav-links{display:none}.hamburger{display:flex}
   section{padding:5rem 1.25rem}
   #concept,#histoire,#experience,#episodes,#privee,#partenaires,#candidature{padding-top:6rem}
-  .concept-layout,.histoire-layout,.privee-grid{grid-template-columns:1fr;gap:3rem}
+  .concept-layout,.histoire-layout,.privee-grid,.exp-layout{grid-template-columns:1fr;gap:2.5rem}
+  .exp-layout{grid-template-areas:"photo""content";}
+  .exp-photo{order:0}
   .h-sticky{position:static}
-  .exp-cards,.eps-grid,.benefits{grid-template-columns:1fr}
+  .eps-grid,.benefits{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr 1fr}
+  .photo-grid{grid-template-columns:1fr 1fr}
   .eps-head{flex-direction:column;align-items:flex-start}
   .socials{flex-direction:column;align-items:center}
-  .exp-highlight{padding:2rem}
-  .exp-highlight::before{display:none}
   .footer-nav{gap:1.25rem}
-  .concept-layout{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -731,22 +629,22 @@ footer{
 
 <!-- HERO -->
 <section id="hero">
-  <canvas id="particleCanvas"></canvas>
+  <div class="hero-photo"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-ep">● Saison 1 — Inscriptions ouvertes</div>
+    <div class="hero-badge">● Saison 1 — Inscriptions ouvertes</div>
     <h1 class="hero-title">
-      <span class="ht-white">PARS TE</span>
-      <span class="ht-fire">PERDRE.</span>
-      <span class="ht-sub">Reviens transformé.</span>
+      <span class="ht1">PARS TE</span>
+      <span class="ht2">PERDRE.</span>
+      <span class="ht3">Reviens transformé.</span>
     </h1>
     <p class="hero-tagline">
       Une web-série québécoise d'aventure et de transformation personnelle.<br>
       De vraies personnes. De vrais défis. Une vraie renaissance.
     </p>
     <div class="hero-btns">
-      <a href="#candidature" class="btn-fire">🔥 Postuler maintenant</a>
-      <a href="#episodes"    class="btn-ghost">▶ Suivre la série</a>
+      <a href="#candidature" class="btn-main">🔥 Postuler maintenant</a>
+      <a href="#episodes"    class="btn-outline">▶ Suivre la série</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -757,24 +655,23 @@ footer{
 
 <!-- MARQUEE -->
 <div class="marquee-strip">
-  <div class="marquee-track" id="marqueeTrack">
+  <div class="marquee-track">
     <span>Expérience Renaissance</span><span class="dot">◆</span>
     <span>Pars te perdre</span><span class="dot">◆</span>
     <span>Reviens transformé</span><span class="dot">◆</span>
-    <span>Web-Série Québécoise</span><span class="dot">◆</span>
-    <span>Saison 1</span><span class="dot">◆</span>
-    <span>Postuler maintenant</span><span class="dot">◆</span>
-    <span>48H pour renaître</span><span class="dot">◆</span>
+    <span>30+ pays visités</span><span class="dot">◆</span>
+    <span>Camino de Compostelle</span><span class="dot">◆</span>
+    <span>1300 km à pied</span><span class="dot">◆</span>
     <span>Touskii</span><span class="dot">◆</span>
-    <!-- duplicate for seamless loop -->
+    <span>Saison 1</span><span class="dot">◆</span>
     <span>Expérience Renaissance</span><span class="dot">◆</span>
     <span>Pars te perdre</span><span class="dot">◆</span>
     <span>Reviens transformé</span><span class="dot">◆</span>
-    <span>Web-Série Québécoise</span><span class="dot">◆</span>
-    <span>Saison 1</span><span class="dot">◆</span>
-    <span>Postuler maintenant</span><span class="dot">◆</span>
-    <span>48H pour renaître</span><span class="dot">◆</span>
+    <span>30+ pays visités</span><span class="dot">◆</span>
+    <span>Camino de Compostelle</span><span class="dot">◆</span>
+    <span>1300 km à pied</span><span class="dot">◆</span>
     <span>Touskii</span><span class="dot">◆</span>
+    <span>Saison 1</span><span class="dot">◆</span>
   </div>
 </div>
 
@@ -783,7 +680,7 @@ footer{
   <div class="container">
     <div class="reveal">
       <div class="sec-label">La Web-Série</div>
-      <h2 class="sec-title">L'<span class="o">Expérience</span><br>Renaissance</h2>
+      <h2 class="sec-title">L'<span class="a">Expérience</span><br>Renaissance</h2>
       <p class="sec-sub">Ce n'est pas de la survie. Ce n'est pas une compétition. Les défis sont le <strong>chemin</strong> — la transformation est la <strong>destination</strong>.</p>
     </div>
     <div class="concept-layout">
@@ -810,11 +707,17 @@ footer{
           </div>
         </div>
       </div>
-      <div class="reveal-right d1">
-        <div class="big-number">48H</div>
-        <div class="concept-card">
-          <h3>Pour Renaître</h3>
-          <p>Un week-end en pleine nature. Des défis conçus pour te pousser. Une caméra pour capturer ta transformation. Du drama, de l'humour, et une dose d'authenticité brute — filmé comme un vrai show.</p>
+      <div class="rr d1">
+        <div class="concept-photo">
+          <img src="photos/rochers-nature.jpg" alt="Eric en nature sur les rochers" onerror="this.style.display='none'">
+          <div class="concept-photo-fallback">🏔️</div>
+          <div class="concept-photo-overlay"></div>
+          <div class="concept-photo-caption">
+            48H Pour Renaître
+            <span>En pleine nature · Filmé comme un show</span>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:1rem">
           <span class="concept-tag">⚡ Saison 1 · Gratuit</span>
         </div>
       </div>
@@ -827,11 +730,11 @@ footer{
   <div class="container">
     <div class="reveal">
       <div class="sec-label">Le Fondateur</div>
-      <h2 class="sec-title">Mon <span class="o">Histoire</span></h2>
+      <h2 class="sec-title">Mon <span class="a">Histoire</span></h2>
       <p class="sec-sub">Je ne suis pas un coach théorique. Je suis la preuve vivante que ça marche.</p>
     </div>
     <div class="histoire-layout">
-      <div class="timeline reveal-left">
+      <div class="timeline rl">
         <div class="t-item">
           <div class="t-left"><div class="t-dot"></div><div class="t-line"></div></div>
           <div class="t-content">
@@ -847,70 +750,97 @@ footer{
           </div>
         </div>
         <div class="t-item">
-          <div class="t-left"><div class="t-dot g"></div><div class="t-line"></div></div>
+          <div class="t-left"><div class="t-dot gold"></div><div class="t-line"></div></div>
           <div class="t-content">
             <h4>Le Camino de Compostelle</h4>
-            <p>1 300 km en 34 jours. Une expérience qui a tout changé — ma façon de voir le monde, de me voir moi-même.</p>
+            <p>1 300 km en 34 jours à travers l'Espagne. Une expérience qui a tout changé — ma façon de voir le monde, de me voir moi-même.</p>
           </div>
         </div>
         <div class="t-item">
-          <div class="t-left"><div class="t-dot g"></div><div class="t-line"></div></div>
+          <div class="t-left"><div class="t-dot gold"></div><div class="t-line"></div></div>
           <div class="t-content">
-            <h4>L'île déserte &amp; les records</h4>
-            <p>7 jours de survie seul. Toronto-Montréal à pied. Plus de 30 pays visités. L'aventure comme mode de vie — et comme thérapie.</p>
+            <h4>Le Maroc, l'île déserte & les records</h4>
+            <p>7 jours de survie seul sur une île. Toronto-Montréal à pied. Jusqu'au Maroc à marche. Plus de 30 pays visités.</p>
           </div>
         </div>
         <div class="t-item">
-          <div class="t-left"><div class="t-dot g"></div></div>
+          <div class="t-left"><div class="t-dot teal"></div></div>
           <div class="t-content">
             <h4>Aujourd'hui : Touskii</h4>
             <p>Je crée Expérience Renaissance pour que d'autres vivent ce que l'aventure m'a donné. Si moi j'ai pu — toi aussi tu peux.</p>
           </div>
         </div>
       </div>
-      <div class="h-sticky reveal-right">
+
+      <div class="h-sticky rr">
         <div class="quote-block">
           <blockquote>« Si moi, parti du fond, j'ai pu me relever par l'aventure — toi aussi tu peux. »</blockquote>
           <cite>— Touskii (Eric Thomas)</cite>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-num" data-target="30">0</div><div class="stat-label">Pays visités</div></div>
-          <div class="stat-card"><div class="stat-num" data-target="1300">0</div><div class="stat-label">km Camino</div></div>
-          <div class="stat-card"><div class="stat-num" data-target="34">0</div><div class="stat-label">Jours à pied</div></div>
-          <div class="stat-card"><div class="stat-num" data-target="7">0</div><div class="stat-label">Jours île déserte</div></div>
+        <div class="photo-grid">
+          <div class="photo-slot">
+            <img src="photos/maroc-colonnes.jpg" alt="Maroc – Touskii" onerror="this.style.display='none'">
+            <div class="photo-slot-fb maroc">🕌</div>
+          </div>
+          <div class="photo-slot">
+            <img src="photos/ocean-atlantique.jpg" alt="Océan Atlantique – Touskii" onerror="this.style.display='none'">
+            <div class="photo-slot-fb ocean">🌊</div>
+          </div>
+          <div class="photo-slot">
+            <img src="photos/camino-seville.jpg" alt="Camino de Compostelle – Touskii" onerror="this.style.display='none'">
+            <div class="photo-slot-fb seville">⛪</div>
+          </div>
+          <div class="photo-slot">
+            <img src="photos/camino-montagne.jpg" alt="Camino – Montagnes – Touskii" onerror="this.style.display='none'">
+            <div class="photo-slot-fb nature">⛰️</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- EXPÉRIENCE -->
 <section id="experience">
   <div class="container">
-    <div class="exp-intro reveal">
-      <div class="sec-label">Un Épisode, c'est quoi ?</div>
-      <h2 class="sec-title">L'<span class="o">Aventure</span><br>en Chiffres</h2>
-    </div>
-    <div class="exp-cards reveal d1">
-      <div class="exp-card">
-        <div class="exp-icon">🌲</div>
-        <h3>Pleine Nature</h3>
-        <p>Forêts, montagnes, lacs — des environnements qui te sortent de ta zone de confort et t'obligent à te reconnecter à toi-même.</p>
+    <div class="exp-layout">
+      <div class="exp-photo rl">
+        <img src="photos/rochers-nature.jpg" alt="En pleine nature" onerror="this.style.display='none'">
+        <div class="exp-photo-fb">🌲</div>
+        <div class="exp-photo-overlay"></div>
       </div>
-      <div class="exp-card">
-        <div class="exp-icon">🎯</div>
-        <h3>Défis Ciblés</h3>
-        <p>Chaque défi est conçu pour révéler quelque chose de précis. Ce n'est pas aléatoire — c'est une transformation guidée.</p>
+      <div class="exp-content reveal d1">
+        <div class="sec-label">Un Épisode, c'est quoi ?</div>
+        <h2 class="sec-title">L'<span class="t">Aventure</span><br>en Détail</h2>
+        <div class="exp-cards">
+          <div class="exp-card">
+            <div class="exp-icon">🌲</div>
+            <div>
+              <h3>Pleine Nature</h3>
+              <p>Forêts, montagnes, lacs — des environnements qui te sortent de ta zone de confort et t'obligent à te reconnecter à toi-même.</p>
+            </div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-icon">🎯</div>
+            <div>
+              <h3>Défis Ciblés</h3>
+              <p>Chaque défi est conçu pour révéler quelque chose de précis. Ce n'est pas aléatoire — c'est une transformation guidée.</p>
+            </div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-icon">🎬</div>
+            <div>
+              <h3>Filmé comme un Show</h3>
+              <p>Du drama, de l'humour authentique, de l'émotion vraie. Ton histoire racontée comme elle mérite de l'être.</p>
+            </div>
+          </div>
+        </div>
+        <div class="exp-cta-box">
+          <h3>48H POUR RENAÎTRE</h3>
+          <p>Un week-end complet en immersion totale. Des défis progressifs. Une équipe de tournage. Et toi — au centre de ta propre renaissance.</p>
+          <a href="#candidature" class="btn-main">Je veux vivre ça</a>
+        </div>
       </div>
-      <div class="exp-card">
-        <div class="exp-icon">🎬</div>
-        <h3>Filmé comme un Show</h3>
-        <p>Du drama, de l'humour authentique, de l'émotion vraie. Ton histoire racontée comme elle mérite de l'être.</p>
-      </div>
-    </div>
-    <div class="exp-highlight reveal d2">
-      <h3>48H POUR RENAÎTRE</h3>
-      <p>Un week-end complet en immersion totale. Des défis progressifs. Une équipe de tournage. Et toi — au centre de ta propre renaissance. À la fin, tu sors différent. Garanti.</p>
     </div>
   </div>
 </section>
@@ -921,17 +851,17 @@ footer{
     <div class="eps-head reveal">
       <div>
         <div class="sec-label">La Série</div>
-        <h2 class="sec-title">Les <span class="o">Épisodes</span></h2>
+        <h2 class="sec-title">Les <span class="a">Épisodes</span></h2>
       </div>
       <div class="eps-btns">
-        <a href="#" class="btn-ghost" style="font-size:.82rem;padding:.6rem 1.2rem">YouTube</a>
-        <a href="#" class="btn-ghost" style="font-size:.82rem;padding:.6rem 1.2rem">TikTok</a>
+        <a href="#" class="btn-outline" style="font-size:.82rem;padding:.6rem 1.2rem">YouTube</a>
+        <a href="#" class="btn-outline" style="font-size:.82rem;padding:.6rem 1.2rem">TikTok</a>
       </div>
     </div>
     <div class="eps-grid reveal d1">
       <a href="#" class="ep-card">
         <div class="ep-thumb t1">
-          <span class="ep-badge coming">Bientôt</span>
+          <span class="ep-badge dim">Bientôt</span>
           <span class="ep-badge" style="left:auto;right:.85rem">EP. 01</span>
           <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
@@ -942,7 +872,7 @@ footer{
       </a>
       <a href="#" class="ep-card">
         <div class="ep-thumb t2">
-          <span class="ep-badge coming">Bientôt</span>
+          <span class="ep-badge dim">Bientôt</span>
           <span class="ep-badge" style="left:auto;right:.85rem">EP. 02</span>
           <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
@@ -953,7 +883,7 @@ footer{
       </a>
       <a href="#" class="ep-card">
         <div class="ep-thumb t3">
-          <span class="ep-badge gold">TEASER</span>
+          <span class="ep-badge gold-b">TEASER</span>
           <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
         <div class="ep-info">
@@ -985,14 +915,14 @@ footer{
     <div class="concours-inner">
       <div class="reveal" style="text-align:center">
         <div class="sec-label" style="justify-content:center">Saison 1</div>
-        <h2 class="sec-title">Un <span class="o">Prix</span> à Gagner</h2>
+        <h2 class="sec-title">Un <span class="a">Prix</span> à Gagner</h2>
         <p class="sec-sub" style="margin-inline:auto;text-align:center">Pour les participants de la Saison 1 — parce que se dépasser mérite d'être récompensé.</p>
       </div>
       <div class="prize-box reveal d1">
         <div class="prize-emoji">✈️</div>
         <h3>UN VOYAGE À GAGNER</h3>
-        <p>Le participant qui se démarque le plus au fil de la saison remporte un voyage d'aventure. Parce que la transformation, ça mérite une récompense à la hauteur. Style MrBeast — mais version québécoise et authentique.</p>
-        <a href="#candidature" class="btn-fire">Tenter ma chance</a>
+        <p>Le participant qui se démarque le plus au fil de la saison remporte un voyage d'aventure. Parce que la transformation, ça mérite une récompense à la hauteur.</p>
+        <a href="#candidature" class="btn-main">Tenter ma chance</a>
       </div>
     </div>
   </div>
@@ -1003,11 +933,11 @@ footer{
   <div class="container">
     <div class="reveal">
       <div class="sec-label">Sans Caméra</div>
-      <h2 class="sec-title">Expérience <span class="o">Privée</span></h2>
+      <h2 class="sec-title">Expérience <span class="a">Privée</span></h2>
       <p class="sec-sub">Tu veux vivre la transformation sans être filmé ? L'expérience privée est faite pour toi.</p>
     </div>
     <div class="privee-grid">
-      <div class="feat-list reveal-left d1">
+      <div class="feat-list rl d1">
         <div class="feat-item"><div class="check">✓</div><span>La même intensité qu'à la série — sans caméra</span></div>
         <div class="feat-item"><div class="check">✓</div><span>Groupes de 8 personnes maximum (immersion totale)</span></div>
         <div class="feat-item"><div class="check">✓</div><span>48h en pleine nature avec Touskii comme guide</span></div>
@@ -1015,12 +945,12 @@ footer{
         <div class="feat-item"><div class="check">✓</div><span>Bilan de transformation post-expérience inclus</span></div>
         <div class="feat-item"><div class="check">✓</div><span>Ce qui se passe dans les bois reste dans les bois</span></div>
       </div>
-      <div class="reveal-right d2">
+      <div class="rr d2">
         <div class="price-card">
           <div class="price-amount">500$–800$</div>
           <div class="price-detail">par personne · groupe de 8 max</div>
           <p>Un investissement dans ta transformation personnelle. Moins cher qu'un coaching de 3 mois. Mille fois plus impactant.</p>
-          <a href="#candidature" class="btn-fire" style="display:block;width:100%;text-align:center">Réserver ma place</a>
+          <a href="#candidature" class="btn-main" style="display:block;width:100%;text-align:center">Réserver ma place</a>
         </div>
       </div>
     </div>
@@ -1033,28 +963,16 @@ footer{
     <div class="part-inner">
       <div class="reveal" style="text-align:center">
         <div class="sec-label" style="justify-content:center">Pour les Marques</div>
-        <h2 class="sec-title">Deviens <span class="o">Partenaire</span></h2>
-        <p class="sec-sub" style="margin-inline:auto;text-align:center">Tu représentes une marque de plein air, d'équipement outdoor ou de bien-être ? On a une opportunité unique pour toi.</p>
+        <h2 class="sec-title">Deviens <span class="a">Partenaire</span></h2>
+        <p class="sec-sub" style="margin-inline:auto;text-align:center">Marque de plein air, équipement outdoor ou bien-être ? On a une opportunité unique pour toi.</p>
       </div>
       <div class="benefits reveal d1">
-        <div class="benefit">
-          <div class="benefit-icon">📡</div>
-          <h4>Visibilité Authentique</h4>
-          <p>Ton produit en action dans un contexte réel et émotionnel — pas une pub, une expérience vraie.</p>
-        </div>
-        <div class="benefit">
-          <div class="benefit-icon">🎯</div>
-          <h4>Audience Engagée</h4>
-          <p>Une communauté de gens qui cherchent à se dépasser. Le public parfait pour ta marque.</p>
-        </div>
-        <div class="benefit">
-          <div class="benefit-icon">🎬</div>
-          <h4>Contenu Premium</h4>
-          <p>Photos, vidéos, stories — du contenu de qualité produit à chaque épisode, inclus dans le partenariat.</p>
-        </div>
+        <div class="benefit"><div class="benefit-icon">📡</div><h4>Visibilité Authentique</h4><p>Ton produit en action dans un contexte réel et émotionnel — pas une pub, une expérience vraie.</p></div>
+        <div class="benefit"><div class="benefit-icon">🎯</div><h4>Audience Engagée</h4><p>Une communauté de gens qui cherchent à se dépasser. Le public parfait pour ta marque.</p></div>
+        <div class="benefit"><div class="benefit-icon">🎬</div><h4>Contenu Premium</h4><p>Photos, vidéos, stories — du contenu de qualité produit à chaque épisode.</p></div>
       </div>
       <div class="reveal d2" style="text-align:center">
-        <a href="mailto:ericthomas1706@gmail.com?subject=Partenariat%20—%20Expérience%20Renaissance" class="btn-fire">Discuter d'un partenariat</a>
+        <a href="mailto:ericthomas1706@gmail.com?subject=Partenariat%20—%20Expérience%20Renaissance" class="btn-main">Discuter d'un partenariat</a>
       </div>
     </div>
   </div>
@@ -1065,8 +983,8 @@ footer{
   <div class="container">
     <div class="reveal">
       <div class="sec-label">Rejoins l'Aventure</div>
-      <h2 class="sec-title">Ta <span class="o">Candidature</span></h2>
-      <p class="sec-sub">Remplis ce formulaire et on te contacte sous 48h. 🔥</p>
+      <h2 class="sec-title">Ta <span class="a">Candidature</span></h2>
+      <p class="sec-sub">Remplis ce formulaire et on te contacte sous 48h.</p>
     </div>
     <div class="form-wrap">
       <div class="type-toggle reveal d1">
@@ -1114,7 +1032,7 @@ footer{
           <textarea id="motivation" name="motivation" required
             placeholder="Parle-moi de toi. Qu'est-ce qui t'a poussé à postuler ? Qu'est-ce que tu cherches à prouver ou à surmonter ?"></textarea>
         </div>
-        <button type="submit" class="btn-fire" style="width:100%;font-size:1.05rem;padding:1.15rem">
+        <button type="submit" class="btn-main" style="width:100%;font-size:1.05rem;padding:1.15rem">
           🔥 Envoyer ma candidature
         </button>
       </form>
@@ -1144,103 +1062,38 @@ footer{
 </footer>
 
 <script>
-// ── NAV
+// NAV
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
 
-// ── MOBILE MENU
+// MOBILE MENU
 function openMenu()  { document.getElementById('mobileMenu').classList.add('open'); }
 function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
 
-// ── CANVAS PARTICLES (embers)
-(function(){
-  const canvas = document.getElementById('particleCanvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, particles = [];
-
-  function resize(){
-    W = canvas.width  = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function rand(a,b){ return a + Math.random()*(b-a); }
-
-  function spawn(){
-    return {
-      x: rand(0, W),
-      y: H + 10,
-      r: rand(1.5, 3.5),
-      vy: rand(-1.2, -.4),
-      vx: rand(-.3, .3),
-      life: 1,
-      decay: rand(.003, .008),
-      hue: rand(15, 40),
-    };
-  }
-
-  for(let i=0;i<60;i++){
-    const p = spawn();
-    p.y = rand(0, H);
-    p.life = rand(.1,1);
-    particles.push(p);
-  }
-
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    // spawn new
-    if(particles.length < 80) particles.push(spawn());
-
-    particles.forEach((p,i) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life -= p.decay;
-      if(p.life <= 0 || p.y < -10){ particles.splice(i,1); return; }
-
-      const alpha = p.life * .65;
-      const grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2);
-      grd.addColorStop(0,`hsla(${p.hue},100%,70%,${alpha})`);
-      grd.addColorStop(1,`hsla(${p.hue},100%,50%,0)`);
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r*2, 0, Math.PI*2);
-      ctx.fillStyle = grd;
-      ctx.fill();
-    });
-
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
-
-// ── SCROLL REVEAL
-const revealObs = new IntersectionObserver(entries => {
+// SCROLL REVEAL
+const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, {threshold:.08});
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => revealObs.observe(el));
+document.querySelectorAll('.reveal,.rl,.rr').forEach(el => obs.observe(el));
 
-// ── COUNTER ANIMATION
-const counterObs = new IntersectionObserver(entries => {
+// COUNTER
+const cobs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(!e.isIntersecting) return;
-    const el  = e.target;
-    const end = parseInt(el.dataset.target, 10);
-    const dur = 1800;
-    const step = 16;
-    const steps = dur / step;
+    const el = e.target, end = parseInt(el.dataset.target);
     let cur = 0;
-    const inc = end / steps;
-    const timer = setInterval(() => {
+    const inc = end / (1800/16);
+    const t = setInterval(() => {
       cur = Math.min(cur + inc, end);
       el.textContent = Math.round(cur) + (end >= 30 && end < 100 ? '+' : '');
-      if(cur >= end) clearInterval(timer);
-    }, step);
-    counterObs.unobserve(el);
+      if(cur >= end) clearInterval(t);
+    }, 16);
+    cobs.unobserve(el);
   });
 }, {threshold:.5});
-document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
+document.querySelectorAll('[data-target]').forEach(el => cobs.observe(el));
 
-// ── FORM TOGGLE
+// FORM TOGGLE
 function setType(type, btn){
   document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -1255,12 +1108,11 @@ function setType(type, btn){
   }
 }
 
-// ── FORM SUBMIT FEEDBACK
+// FORM SUBMIT
 document.getElementById('candidatureForm').addEventListener('submit', function(){
   const btn = this.querySelector('button[type=submit]');
   btn.textContent = '⏳ Envoi en cours…';
   btn.disabled = true;
-  btn.style.opacity = '.7';
 });
 </script>
 </body>
